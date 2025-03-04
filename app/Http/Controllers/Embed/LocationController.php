@@ -11,6 +11,11 @@ class LocationController extends Controller{
         $location  = Location::get();
         return view('welcome',compact("location"));
 }
+ // Show the edit form with the location data
+ public function edit_location($id) {
+    $location = Location::findOrFail($id); // Retrieve the location by ID
+    return view('edit-location', compact('location')); // Return the edit form view
+}
 public function store_location(Request $request) {
 
     $validstor = Validator::make($request->all(), [
@@ -37,6 +42,29 @@ public function store_location(Request $request) {
     ], 201);
 }
 
+public function update_location(Request $request, $id) {
+    $validstor = Validator::make($request->all(), [
+        'country' => 'required|string|max:255',
+        'district' => 'nullable|string',
+        'village' => 'required|string|max:255',
+        'image_url' => 'required|url',
+    ]);
 
+    if ($validstor->fails()) {
+        return response()->json([
+            'success' => false,
+            'errors' => $validstor->errors(),
+        ], 422);
+    }
+
+    $location = Location::findOrFail($id);
+    $location->update($validstor->validated());
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Location updated successfully',
+        'data' => $location,
+    ], 200);
+}
 }
 //country
