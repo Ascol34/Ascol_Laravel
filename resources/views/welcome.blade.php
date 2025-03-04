@@ -168,6 +168,14 @@
                         <td>
                         <a href="{{ url('/edit-location/' . $prod->id) }}" class="btn btn-primary">
                           <button style="border: none; border-radius: .25rem; padding: .25rem .5rem; background-color: #007bff; color: whitesmoke;">Edit</button></a>
+                          <form action="{{ url('/delete-location/' . $prod->id) }}" method="POST" style="display: inline-block;">
+                      @csrf
+                    @method('DELETE') 
+    <button type="submit" style="border: none; border-radius: .25rem; padding: .25rem .5rem; background-color: red; color: whitesmoke;">
+        Delete
+    </button>
+</form>
+
                        </td>
                         
                     </tr>

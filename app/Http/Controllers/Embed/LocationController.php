@@ -11,7 +11,6 @@ class LocationController extends Controller{
         $location  = Location::get();
         return view('welcome',compact("location"));
 }
- // Show the edit form with the location data
  public function edit_location($id) {
     $location = Location::findOrFail($id); // Retrieve the location by ID
     return view('edit-location', compact('location')); // Return the edit form view
@@ -66,5 +65,11 @@ public function update_location(Request $request, $id) {
         'data' => $location,
     ], 200);
 }
+public function delete_location($id) {
+    $location = Location::findOrFail($id); 
+    $location->delete();
+    return response()->json(['success' => 'Location deleted successfully!']);
 }
-//country
+
+}
+
